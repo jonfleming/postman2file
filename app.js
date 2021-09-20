@@ -4,9 +4,8 @@ const express = require('express'),
   shell = require('shelljs'),
 
    // Modify the folder path in which responses need to be stored
-  root = './Responses/',
+  root = './',
   defaultFileExtension = 'json', // Change the default file extension
-  bodyParser = require('body-parser'),
   DEFAULT_MODE = 'writeFile',
   path = require('path');
 
@@ -14,8 +13,8 @@ const express = require('express'),
 shell.mkdir('-p', root);
 
  // Change the limits according to your response size
-app.use(bodyParser.json({limit: '50mb', extended: true}));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); 
+app.use(express.json({limit: '50mb', extended: true}));
+app.use(express.urlencoded({ limit: '50mb', extended: true })); 
 
 app.get('/', (req, res) => res.send('Hello, I write data to file. Send them requests!'));
 
@@ -33,7 +32,7 @@ app.post('/write', (req, res) => {
     }
     else {
       res.send('Success');
-      console.log(`${fsMode} - ${folder} ${filename}`);
+      // console.log(`${fsMode} - ${folder} ${filename} ${req.body.responseData}`);
     }
   });
 });
