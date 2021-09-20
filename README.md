@@ -2,7 +2,7 @@
 
 This project will help in writing the responses of a request from Postman.
 
-This project is to be used with template from Postman.
+This project is to be used with templates from Postman.
 
 ### Steps to install the template
 1. Launch Postman Native App [Download Postman](https://www.postman.com/downloads/)
@@ -65,8 +65,31 @@ In case you want to write CSV data to a file, all you need to do is change the `
 ## File Support
 You can modify the `opts` variable as per your need under the `Tests` tab of the collection, the following features are supported:
 
-1. If you want all the data to be written to a single file then you can modify the value of mode to appendFile instead of writeFile (More functions here: [Node FS](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback))
+If you want all the data to be written to a single file then you can modify the value of mode to appendFile instead of writeFile (More functions here: [Node FS](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback))
 
-2. If you want each response to be stored in a different file, then you can provide a `uniqueIdentifier` such as `Date.now()` or some environment variable as a counter, and it'll be used generate unique file names. You can also make the value of uniqueIdentifier as `true` and the server will internally append a unique number to every file name.
+### Example Postman Test
+```
+saveResult('response.json', pm.response.json()); 
 
-3. You can provide options to the FS lib, e.g. `options: { encoding: 'base64' }`.
+// Save response to file (postman2file)
+function saveResult(filename, output) {
+    let opts = {
+        filename: filename,
+        folder: 'foldername',
+        mode: 'writeFile', 
+        responseData: output
+    };
+
+    pm.sendRequest({
+        url: 'http://localhost:3000/write',
+        method: 'POST',
+        header: 'Content-Type:application/json',
+        body: {
+            mode: 'raw',
+            raw: JSON.stringify(opts)
+        }
+    }, function (err, res) {
+        console.log(res);
+    });
+}
+```
