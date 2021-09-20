@@ -1,4 +1,4 @@
-# [postman2file](https://github.com/jonfleming/postman2file) (forked from [ResponseToFile-Postman](https://github.com/sivcan/ResponseToFile-Postman))
+# postman2file (forked from [ResponseToFile-Postman](https://github.com/sivcan/ResponseToFile-Postman))
 
 This project helps you save the responses of a request from Postman to a file.
 
@@ -42,7 +42,7 @@ saveResult('response.json', pm.response.json());
 function saveResult(filename, output) {
     let opts = {
         filename: filename,
-        folder: 'foldername',
+        folder: '',
         mode: 'writeFile', 
         responseData: output
     };
@@ -66,9 +66,6 @@ You can modify the script and the local server to support more data formats / da
 ## Additionally
 Instead of adding this code to each request, you can copy this code to the `Tests` tab of the collection and it will be executed after each request.
 
-
 ## File Support
-You can modify the `opts` variable as per your need under the `Tests` tab of the request or collection, the following features are supported:
-
-If you want all the data to be written to a single file then you can modify the value of mode to appendFile instead of writeFile (More functions here: [Node FS](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback))
+If you want the data to be appended to an existing file instead of overwriting it you can modify the value of mode to appendFile instead of writeFile (More functions here: [Node FS](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback))
 
